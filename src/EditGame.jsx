@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router";
 
 function EditGame() {
     const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ function EditGame() {
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setFormData({
             ...formData,
             [name]: value,
@@ -53,7 +53,7 @@ function EditGame() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Successfully edited:', data);
-                setFormData({ title: '', description: '', developer: '' });
+                setFormData({title: '', description: '', developer: ''});
                 navigate('/games');
             } else {
                 console.error('Error editing game:', response.statusText);
@@ -75,7 +75,7 @@ function EditGame() {
     return (
         <>
             <h1 className="text-2xl font-bold">Edit Game</h1>
-            <div className="bg-black p-6 rounded-lg shadow-md">
+            <div className="bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-4">Edit game</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -88,7 +88,7 @@ function EditGame() {
                             name="title"
                             value={formData.title}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded-md bg-black text-white focus:outline-none focus:ring-2"
+                            className="w-full p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2"
                             placeholder="Title of the game"
                         />
                     </div>
@@ -101,7 +101,7 @@ function EditGame() {
                             name="description"
                             value={formData.description}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded-md bg-black text-white focus:outline-none focus:ring-2"
+                            className="w-full p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2"
                             placeholder="Description of the game"
                         ></textarea>
                     </div>
@@ -115,11 +115,12 @@ function EditGame() {
                             name="developer"
                             value={formData.developer}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded-md bg-black text-white focus:outline-none focus:ring-2"
+                            className="w-full p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2"
                             placeholder="Developer of the game"
                         />
                     </div>
-                    <button type="submit" className="px-4 py-2 bg-white text-black font-semibold rounded-md transition">
+                    <button type="submit"
+                            className="px-4 py-2 bg-white text-black font-semibold rounded-md border border-black">
                         Submit
                     </button>
                 </form>

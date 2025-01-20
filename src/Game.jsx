@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import {useParams, useNavigate} from "react-router";
+import {useEffect, useState} from "react";
 
 function Game() {
     const params = useParams();
@@ -49,20 +49,20 @@ function Game() {
             <h1 className="text-2xl font-bold mb-6">Game: {game?.title}</h1>
             {game ? (
                 <div className="space-y-6">
-                    <div className="bg-black p-6 rounded-lg shadow-md">
+                    <div className="bg-white p-6 rounded-lg shadow-md">
                         <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
                         <p className="mb-4">{game.description}</p>
                         <p>Developer: {game.developer}</p>
                         <div className="flex mt-4">
                             <button
                                 onClick={editNavigation}
-                                className="px-4 py-2 bg-white text-black rounded mr-2"
+                                className="px-4 py-2 bg-white text-black rounded border border-black mr-2"
                             >
                                 Edit
                             </button>
                             <button
                                 onClick={deleteGame}
-                                className="px-4 py-2 bg-white text-black rounded"
+                                className="px-4 py-2 bg-white text-black rounded border border-black"
                             >
                                 Delete
                             </button>

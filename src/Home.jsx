@@ -1,5 +1,7 @@
 function Home() {
-    //Home
+    return (
+      <h1>Welcome to the Game website</h1>
+    );
 }
 
 export default Home;

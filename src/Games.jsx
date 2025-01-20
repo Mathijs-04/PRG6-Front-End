@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import {useEffect, useState} from "react";
+import {Link} from "react-router";
 
 function Games() {
     const [games, setGames] = useState([]);
@@ -32,7 +32,7 @@ function Games() {
                     games.map((game) => (
                         <div
                             key={game.id}
-                            className="bg-black p-4 rounded-lg shadow-md"
+                            className="bg-white p-4 rounded-lg shadow-md"
                         >
                             <Link to={`/games/${game.id}`} className="text-2xl font-bold">
                                 {game.title}
