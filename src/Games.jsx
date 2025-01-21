@@ -65,27 +65,25 @@ function Games() {
                 )}
             </div>
             <div>
-                {/* Use optional chaining and null checks */}
                 {pagination._links?.previous && (
-                    <button onClick={() => handlePageChange(currentPage - 1)}>
-                        &lt;
-                    </button>
+                    <button onClick={() => handlePageChange(currentPage - 1)}>&lt;</button>
                 )}
-                {[...Array(pagination.totalPages || 0).keys()].map((page) => (
+
+                {pageNumbers.map((page) => (
                     <button
                         key={page}
-                        onClick={() => handlePageChange(page + 1)}
-                        className={page + 1 === currentPage ? "font-bold" : ""}
+                        onClick={() => handlePageChange(page)}
+                        className={page === currentPage ? "font-bold" : ""}
                     >
-                        {page + 1}
+                        {page}
                     </button>
                 ))}
+
                 {pagination._links?.next && (
-                    <button onClick={() => handlePageChange(currentPage + 1)}>
-                        &gt;
-                    </button>
+                    <button onClick={() => handlePageChange(currentPage + 1)}>&gt;</button>
                 )}
             </div>
+
         </>
     );
 }
