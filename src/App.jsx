@@ -8,6 +8,7 @@ import Game from './Game.jsx';
 import Games from './Games.jsx';
 import CreateGame from './CreateGame.jsx';
 import EditGame from './EditGame.jsx';
+import NotFound from "./NotFound.jsx";
 
 const router = createBrowserRouter(
     [
@@ -33,6 +34,10 @@ const router = createBrowserRouter(
                 {
                     path: "/games/:id/edit",
                     element: <EditGame/>
+                },
+                {
+                    path: "*",
+                    element: <NotFound/>
                 }
             ]
         }
