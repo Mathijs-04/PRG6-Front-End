@@ -60,9 +60,7 @@ function Games() {
                         &lt;
                     </button>
                 )}
-            </div>
 
-            <div>
                 {pagination._links.next && (
                     <button onClick={() => handlePageChange(currentPage + 1)}>
                         &gt;
