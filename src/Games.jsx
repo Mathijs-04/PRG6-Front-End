@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import {useEffect, useState} from "react";
+import {Link} from "react-router";
 
 function Games() {
     const [games, setGames] = useState([]);
@@ -17,7 +17,7 @@ function Games() {
             });
             const data = await response.json();
             setGames(data.items);
-            setPagination(data.pagination);
+            setPagination(data.pagination || {});
         } catch (error) {
             console.error('Error:', error);
         }
@@ -28,10 +28,20 @@ function Games() {
     }, [currentPage]);
 
     const handlePageChange = (page) => {
-        if (page >= 1 && page <= pagination.totalPages) {
+        if (page >= 1 && page <= (pagination.totalPages || 1)) {
             setCurrentPage(page);
         }
     };
+
+    const maxPageLinks = 5;
+    const totalPages = pagination.totalPages || 1;
+    const startPage = Math.max(1, currentPage - Math.floor(maxPageLinks / 2));
+    const endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
+    const adjustedStartPage = Math.max(1, endPage - maxPageLinks + 1);
+    const pageNumbers = Array.from(
+        {length: endPage - adjustedStartPage + 1},
+        (_, i) => adjustedStartPage + i
+    );
 
     return (
         <>
@@ -55,46 +65,27 @@ function Games() {
                 )}
             </div>
             <div>
-                {pagination._links.previous && (
+                {/* Use optional chaining and null checks */}
+                {pagination._links?.previous && (
                     <button onClick={() => handlePageChange(currentPage - 1)}>
                         &lt;
                     </button>
                 )}
-
-                {pagination._links.next && (
+                {[...Array(pagination.totalPages || 0).keys()].map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => handlePageChange(page + 1)}
+                        className={page + 1 === currentPage ? "font-bold" : ""}
+                    >
+                        {page + 1}
+                    </button>
+                ))}
+                {pagination._links?.next && (
                     <button onClick={() => handlePageChange(currentPage + 1)}>
                         &gt;
                     </button>
                 )}
             </div>
-
-            {/*<div className="flex justify-center mt-6 space-x-2">*/}
-            {/*    {pagination._links?.previous && (*/}
-            {/*        <button*/}
-            {/*            className="px-4 py-2 bg-gray-300 rounded"*/}
-            {/*            onClick={() => handlePageChange(currentPage - 1)}*/}
-            {/*        >*/}
-            {/*            Previous*/}
-            {/*        </button>*/}
-            {/*    )}*/}
-            {/*    {[...Array(pagination.totalPages).keys()].map((page) => (*/}
-            {/*        <button*/}
-            {/*            key={page}*/}
-            {/*            className={`px-4 py-2 rounded ${currentPage === page + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}*/}
-            {/*            onClick={() => handlePageChange(page + 1)}*/}
-            {/*        >*/}
-            {/*            {page + 1}*/}
-            {/*        </button>*/}
-            {/*    ))}*/}
-            {/*    {pagination._links?.next && (*/}
-            {/*        <button*/}
-            {/*            className="px-4 py-2 bg-gray-300 rounded"*/}
-            {/*            onClick={() => handlePageChange(currentPage + 1)}*/}
-            {/*        >*/}
-            {/*            Next*/}
-            {/*        </button>*/}
-            {/*    )}*/}
-            {/*</div>*/}
         </>
     );
 }
