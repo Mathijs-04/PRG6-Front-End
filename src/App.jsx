@@ -36,6 +36,10 @@ const router = createBrowserRouter(
                     element: <EditGame/>
                 },
                 {
+                    path: "/notfound",
+                    element: <NotFound/>
+                },
+                {
                     path: "*",
                     element: <NotFound/>
                 }

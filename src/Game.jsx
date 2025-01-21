@@ -1,5 +1,5 @@
-import {useParams, useNavigate} from "react-router";
-import {useEffect, useState} from "react";
+import { useParams, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 function Game() {
     const params = useParams();
@@ -15,10 +15,17 @@ function Game() {
                     'Accept': 'application/json'
                 }
             });
+
+            if (!response.ok) {
+                navigate('/notfound');
+                return;
+            }
+
             const data = await response.json();
             setGame(data);
         } catch (error) {
             console.error('Error:', error);
+            navigate('/notfound');
         }
     }
 
@@ -46,34 +53,36 @@ function Game() {
 
     return (
         <>
-            <h1 className="text-2xl font-bold mb-6">Game: {game?.title}</h1>
             {game ? (
-                <div className="space-y-6">
-                    <div className="bg-white p-6 rounded-lg shadow-md">
-                        <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
-                        <p className="mb-4">{game.description}</p>
-                        <p>Developer: {game.developer}</p>
-                        <div className="flex mt-4">
-                            <button
-                                onClick={editNavigation}
-                                className="px-4 py-2 bg-white text-black rounded border border-black mr-2"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                onClick={deleteGame}
-                                className="px-4 py-2 bg-white text-black rounded border border-black"
-                            >
-                                Delete
-                            </button>
+                <>
+                    <h1 className="text-2xl font-bold mb-6">Game: {game.title}</h1>
+                    <div className="space-y-6">
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
+                            <p className="mb-4">{game.description}</p>
+                            <p>Developer: {game.developer}</p>
+                            <div className="flex mt-4">
+                                <button
+                                    onClick={editNavigation}
+                                    className="px-4 py-2 bg-white text-black rounded border border-black mr-2"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={deleteGame}
+                                    className="px-4 py-2 bg-white text-black rounded border border-black"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             ) : (
-                <p>No game found</p>
+                <p>Loading...</p>
             )}
         </>
-    )
+    );
 }
 
 export default Game;
