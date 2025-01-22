@@ -9,6 +9,7 @@ import Games from './Games.jsx';
 import CreateGame from './CreateGame.jsx';
 import EditGame from './EditGame.jsx';
 import NotFound from "./NotFound.jsx";
+import { ThemeProvider } from "./ThemeContext.jsx";
 
 const router = createBrowserRouter(
     [
@@ -51,7 +52,10 @@ const router = createBrowserRouter(
 function App() {
     return (
         <>
-            <RouterProvider router={router}/>
+            <ThemeProvider>
+                <RouterProvider router={router}/>
+            </ThemeProvider>
+
         </>
     );
 }
