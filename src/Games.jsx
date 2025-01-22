@@ -1,10 +1,12 @@
-import {useEffect, useState} from "react";
-import {Link} from "react-router";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import Searchbar from "./Searchbar.jsx";
 
 function Games() {
     const [games, setGames] = useState([]);
     const [pagination, setPagination] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const limit = 5;
 
     async function fetchGames(page = 1, limit = 10) {
@@ -23,6 +25,15 @@ function Games() {
         }
     }
 
+    const handlesearch = (term) => {
+        setSearchTerm(term);
+    }
+
+    const filteredGames = games.filter((game) =>
+        game.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        game.developer.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     useEffect(() => {
         fetchGames(currentPage, limit);
     }, [currentPage]);
@@ -39,16 +50,19 @@ function Games() {
     const endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
     const adjustedStartPage = Math.max(1, endPage - maxPageLinks + 1);
     const pageNumbers = Array.from(
-        {length: endPage - adjustedStartPage + 1},
+        { length: endPage - adjustedStartPage + 1 },
         (_, i) => adjustedStartPage + i
     );
 
     return (
         <>
             <h1 className="text-2xl font-bold mb-6">Games</h1>
+
+            <Searchbar onSearch={handlesearch} />
+
             <div className="space-y-4">
-                {games && games.length > 0 ? (
-                    games.map((game) => (
+                {filteredGames && filteredGames.length > 0 ? (
+                    filteredGames.map((game) => (
                         <div
                             key={game.id}
                             className="bg-white p-4 rounded-lg shadow-md"
