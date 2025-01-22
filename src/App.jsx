@@ -49,9 +49,13 @@ const router = createBrowserRouter(
 );
 
 function App() {
+    const [inProp, setInProp] = useState(false);
+
     return (
         <>
             <RouterProvider router={router}/>
+            <button onClick={() => setInProp(!inProp)}>Toggle Transition</button>
+            <Home in={inProp}/>
         </>
     );
 }
