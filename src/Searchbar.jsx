@@ -9,7 +9,7 @@ const Searchbar = ({ onSearch }) => {
     }
 
     return(
-        <input type="text" value={searchTerm} onChange={handleSearch} placeholder="Search games or developers..."/>
+        <input type="text" value={searchTerm} onChange={handleSearch} placeholder="Search for games or developers..."/>
     )
 }
 
