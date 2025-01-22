@@ -16,8 +16,8 @@ const transitionStyles = {
     exited: { opacity: 0 },
 };
 
-function withFadeTransition(WrappedComponent) {
-    return function FadeTransition({ in: inProp, ...props }) {
+function FadeTransition(WrappedComponent) {
+    function FadeTransitionComponent({ in: inProp, ...props }) {
         const nodeRef = useRef(null);
         return (
             <Transition nodeRef={nodeRef} in={inProp} timeout={duration}>
@@ -34,11 +34,13 @@ function withFadeTransition(WrappedComponent) {
                 )}
             </Transition>
         );
+    }
+
+    FadeTransitionComponent.propTypes = {
+        in: PropTypes.bool.isRequired,
     };
+
+    return FadeTransitionComponent;
 }
 
-withFadeTransition.propTypes = {
-    in: PropTypes.bool.isRequired,
-};
-
-export default withFadeTransition;
+export default FadeTransition;
