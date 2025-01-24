@@ -4,14 +4,14 @@ import Searchbar from "./Searchbar.jsx";
 
 function Games() {
     const [games, setGames] = useState([]);
-    const [pagination, setPagination] = useState({});
+    const [filteredGames, setFilteredGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
     const limit = 5;
 
-    async function fetchGames(page = 1, limit = 10) {
+    async function fetchAllGames() {
         try {
-            const response = await fetch(`http://145.24.223.187:8000/games?page=${page}&limit=${limit}`, {
+            const response = await fetch(`http://145.24.223.187:8000/games`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
@@ -19,33 +19,34 @@ function Games() {
             });
             const data = await response.json();
             setGames(data.items);
-            setPagination(data.pagination || {});
+            setFilteredGames(data.items);
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
-    const handlesearch = (term) => {
+    const handleSearch = (term) => {
         setSearchTerm(term);
+        const filtered = games.filter((game) =>
+            game.title.toLowerCase().includes(term.toLowerCase()) ||
+            game.developer.toLowerCase().includes(term.toLowerCase())
+        );
+        setFilteredGames(filtered);
+        setCurrentPage(1);
     }
 
-    const filteredGames = games.filter((game) =>
-        game.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        game.developer.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
     useEffect(() => {
-        fetchGames(currentPage, limit);
-    }, [currentPage]);
+        fetchAllGames();
+    }, []);
 
     const handlePageChange = (page) => {
-        if (page >= 1 && page <= (pagination.totalPages || 1)) {
-            setCurrentPage(page);
-        }
+        setCurrentPage(page);
     };
 
+    const paginatedGames = filteredGames.slice((currentPage - 1) * limit, currentPage * limit);
+    const totalPages = Math.ceil(filteredGames.length / limit);
+
     const maxPageLinks = 5;
-    const totalPages = pagination.totalPages || 1;
     const startPage = Math.max(1, currentPage - Math.floor(maxPageLinks / 2));
     const endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
     const adjustedStartPage = Math.max(1, endPage - maxPageLinks + 1);
@@ -58,11 +59,11 @@ function Games() {
         <>
             <h1 className="text-2xl font-bold mb-6">Games</h1>
 
-            <Searchbar onSearch={handlesearch} />
+            <Searchbar onSearch={handleSearch} />
 
             <div className="space-y-4">
-                {filteredGames && filteredGames.length > 0 ? (
-                    filteredGames.map((game) => (
+                {paginatedGames && paginatedGames.length > 0 ? (
+                    paginatedGames.map((game) => (
                         <div
                             key={game.id}
                             className="bg-white p-4 rounded-lg shadow-md"
@@ -79,7 +80,7 @@ function Games() {
                 )}
             </div>
             <div>
-                {pagination._links?.previous && (
+                {currentPage > 1 && (
                     <button onClick={() => handlePageChange(currentPage - 1)}>&lt;</button>
                 )}
 
@@ -93,11 +94,10 @@ function Games() {
                     </button>
                 ))}
 
-                {pagination._links?.next && (
+                {currentPage < totalPages && (
                     <button onClick={() => handlePageChange(currentPage + 1)}>&gt;</button>
                 )}
             </div>
-
         </>
     );
 }
