@@ -60,7 +60,8 @@ function Game() {
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
                             <p className="mb-4">{game.description}</p>
-                            <p>Developer: {game.developer}</p>
+                            <p className="mb-4">Developer: {game.developer}</p>
+                            <p>Favorite: {game.favorite.toString()}</p>
                             <div className="flex mt-4">
                                 <button
                                     onClick={editNavigation}
