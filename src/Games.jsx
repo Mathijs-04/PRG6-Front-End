@@ -79,7 +79,7 @@ function Games() {
                         </Link>
                     ))
                 ) : (
-                    <p>No Games</p>
+                    <p>Loading games...</p>
                 )}
             </div>
             <div>
