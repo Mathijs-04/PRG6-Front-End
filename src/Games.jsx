@@ -44,20 +44,6 @@ function Games() {
         setCurrentPage(page);
     };
 
-    async function toggleFavorite() {
-        try {
-            const response = await fetch(`http://145.24.223.187:8000/games`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                //Update favorite boolean
-           });
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
-    }
-
     const paginatedGames = filteredGames.slice((currentPage - 1) * limit, currentPage * limit);
     const totalPages = Math.ceil(filteredGames.length / limit);
 
@@ -89,7 +75,6 @@ function Games() {
                                 <p>{game.description}</p>
                                 <p>Developer: {game.developer}</p>
                                 <p>Favorite: {game.favorite.toString()}</p>
-                                <button onClick={toggleFavorite(game.id)}>Test</button>
                             </div>
                         </Link>
                     ))

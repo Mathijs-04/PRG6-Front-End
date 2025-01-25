@@ -43,6 +43,20 @@ function Game() {
         }
     }
 
+    async function toggleFavorite() {
+        try {
+            const response = await fetch(`http://145.24.223.187:8000/games`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                //Update favorite boolean
+            });
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
+
     useEffect(() => {
         fetchGame();
     }, []);
@@ -74,6 +88,12 @@ function Game() {
                                     className="px-4 py-2 bg-white text-black rounded border border-black"
                                 >
                                     Delete
+                                </button>
+                                <button
+                                    onClick={toggleFavorite}
+                                    className="px-4 py-2 bg-white text-black rounded border border-black"
+                                >
+                                    Favorite
                                 </button>
                             </div>
                         </div>
