@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import {useParams, useNavigate} from "react-router";
+import {useEffect, useState} from "react";
 
 function Game() {
     const params = useParams();
@@ -44,14 +44,17 @@ function Game() {
     }
 
     async function toggleFavorite() {
+        const favorite = game.favorite;
         try {
-            const response = await fetch(`http://145.24.223.187:8000/games`, {
+            await fetch(`http://145.24.223.187:8000/games/${id}`, {
+                method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                //Update favorite boolean
+                body: JSON.stringify({"favorite": !favorite}),
             });
+            setGame({...game, favorite: !favorite});
         } catch (error) {
             console.error('An error occurred:', error);
         }
@@ -91,7 +94,7 @@ function Game() {
                                 </button>
                                 <button
                                     onClick={toggleFavorite}
-                                    className="px-4 py-2 bg-white text-black rounded border border-black"
+                                    className="px-4 py-2 bg-white text-black rounded border border-black ml-2"
                                 >
                                     Favorite
                                 </button>
