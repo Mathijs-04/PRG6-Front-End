@@ -6,6 +6,7 @@ function CreateGame() {
         title: '',
         description: '',
         developer: '',
+        favorite: false
     });
 
     const navigate = useNavigate();

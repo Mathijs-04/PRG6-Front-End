@@ -64,16 +64,18 @@ function Games() {
             <div className="space-y-4">
                 {paginatedGames && paginatedGames.length > 0 ? (
                     paginatedGames.map((game) => (
-                        <div
-                            key={game.id}
-                            className="bg-white p-4 rounded-lg shadow-md"
-                        >
-                            <Link to={`/games/${game.id}`} className="text-2xl font-bold">
-                                {game.title}
-                            </Link>
-                            <p>{game.description}</p>
-                            <p>Developer: {game.developer}</p>
-                        </div>
+                        <Link to={`/games/${game.id}`}>
+                            <div
+                                key={game.id}
+                                className="bg-white p-4 rounded-lg shadow-md"
+                            >
+
+                                <p className="text-2xl font-bold">{game.title}</p>
+                                <p>{game.description}</p>
+                                <p>Developer: {game.developer}</p>
+                                <p>Favorite: {game.favorite.toString()}</p>
+                            </div>
+                        </Link>
                     ))
                 ) : (
                     <p>No Games</p>
