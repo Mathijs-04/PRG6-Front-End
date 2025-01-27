@@ -6,7 +6,11 @@ function Button() {
 
     return (
         <button
-            className="p-2 bg-gray-800 text-white rounded"
+            className={`p-2 rounded border ${
+                theme === 'light'
+                    ? 'bg-gray-800 text-white border-gray-800'
+                    : 'bg-white text-black border-black'
+            }`}
             onClick={toggleTheme}
         >
             Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode

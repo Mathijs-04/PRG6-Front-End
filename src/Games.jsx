@@ -1,14 +1,17 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Link} from "react-router";
 import Searchbar from "./Searchbar.jsx";
 import game from "./Game.jsx";
+import {ThemeContext} from "./ThemeContext.jsx";
 
 function Games() {
+    const {theme} = useContext(ThemeContext);
+    console.log("Theme in Games.jsx:", theme);
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
-    const [showFavorites, setShowfavorites] = useState(false);
+    const [showFavorites, setShowFavorites] = useState(false);
     const limit = 5;
 
     async function fetchAllGames() {
@@ -64,7 +67,7 @@ function Games() {
     }
 
     const toggleShowFavorites = () => {
-        setShowfavorites(!showFavorites);
+        setShowFavorites(!showFavorites);
     }
 
     useEffect(() => {
@@ -96,25 +99,31 @@ function Games() {
     );
 
     return (
-        <>
+        <div className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
             <h1 className="text-2xl font-bold mb-6">Games</h1>
 
             <Searchbar onSearch={handleSearch}/>
 
-            <button onClick={toggleShowFavorites}
-                    className="ml-2 px-4 py-2 bg-white text-black rounded border border-black">
+            <button
+                onClick={toggleShowFavorites}
+                className={`ml-2 px-4 py-2 ${
+                    theme === 'dark'
+                        ? 'bg-gray-700 text-white border-white'
+                        : 'bg-white text-black border-black'
+                } rounded border`}
+            >
                 {showFavorites ? 'Show All' : 'Show Favorites'}
             </button>
 
             <div className="space-y-4">
                 {paginatedGames && paginatedGames.length > 0 ? (
                     paginatedGames.map((game) => (
-                        <Link to={`/games/${game.id}`}>
+                        <Link to={`/games/${game.id}`} key={game.id}>
                             <div
-                                key={game.id}
-                                className="bg-white p-4 rounded-lg shadow-md"
+                                className={`p-4 rounded-lg shadow-md ${
+                                    theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'
+                                }`}
                             >
-
                                 <p className="text-2xl font-bold">{game.title}</p>
                                 <p>{game.description}</p>
                                 <p>Developer: {game.developer}</p>
@@ -124,7 +133,11 @@ function Games() {
                                         e.preventDefault();
                                         toggleFavorite(game.id, game.favorite);
                                     }}
-                                    className="px-4 py-2 bg-white text-black rounded border border-black ml-2"
+                                    className={`px-4 py-2 ml-2 rounded border ${
+                                        theme === 'dark'
+                                            ? 'bg-gray-700 text-white border-white'
+                                            : 'bg-white text-black border-black'
+                                    }`}
                                 >
                                     {game.favorite ? 'Unfavorite' : 'Favorite'}
                                 </button>
@@ -135,6 +148,7 @@ function Games() {
                     <p>Loading games...</p>
                 )}
             </div>
+
             <div>
                 <button onClick={() => handlePageChange(1)}>First</button>
 
@@ -146,7 +160,7 @@ function Games() {
                     <button
                         key={page}
                         onClick={() => handlePageChange(page)}
-                        className={page === currentPage ? "font-bold" : ""}
+                        className={page === currentPage ? 'font-bold' : ''}
                     >
                         {page}
                     </button>
@@ -158,7 +172,8 @@ function Games() {
 
                 <button onClick={() => handlePageChange(totalPages)}>Last</button>
             </div>
-        </>
+        </div>
+
     );
 }
 

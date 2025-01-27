@@ -1,7 +1,9 @@
 import {useParams, useNavigate} from "react-router";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
+import {ThemeContext} from "./ThemeContext.jsx";
 
 function Game() {
+    const {theme} = useContext(ThemeContext);
     const params = useParams();
     const id = params.id;
     const [game, setGame] = useState(null);
@@ -52,12 +54,12 @@ function Game() {
     }
 
     return (
-        <>
+        <div className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
             {game ? (
                 <>
                     <h1 className="text-2xl font-bold mb-6">Game: {game.title}</h1>
                     <div className="space-y-6">
-                        <div className="bg-white p-6 rounded-lg shadow-md">
+                        <div className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
                             <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
                             <p className="mb-4">{game.description}</p>
                             <p className="mb-4">Developer: {game.developer}</p>
@@ -72,13 +74,13 @@ function Game() {
                             <div className="flex mt-4">
                                 <button
                                     onClick={editNavigation}
-                                    className="px-4 py-2 bg-white text-black rounded border border-black mr-2"
+                                    className={`px-4 py-2 rounded border mr-2 ${theme === 'dark' ? 'bg-gray-700 text-white border-white' : 'bg-white text-black border-black'}`}
                                 >
                                     Edit
                                 </button>
                                 <button
                                     onClick={deleteGame}
-                                    className="px-4 py-2 bg-white text-black rounded border border-black"
+                                    className={`px-4 py-2 rounded border ${theme === 'dark' ? 'bg-gray-700 text-white border-white' : 'bg-white text-black border-black'}`}
                                 >
                                     Delete
                                 </button>
@@ -89,7 +91,7 @@ function Game() {
             ) : (
                 <p>Loading...</p>
             )}
-        </>
+        </div>
     );
 }
 

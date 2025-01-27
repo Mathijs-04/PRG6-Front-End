@@ -1,7 +1,9 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import {useNavigate} from "react-router";
+import {ThemeContext} from "./ThemeContext.jsx";
 
 function CreateGame() {
+    const {theme} = useContext(ThemeContext);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -49,9 +51,9 @@ function CreateGame() {
     };
 
     return (
-        <>
+        <div className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
             <h1 className="text-2xl font-bold">Create Game</h1>
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
                 <h2 className="text-2xl font-bold mb-4">Create a new game</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -64,7 +66,7 @@ function CreateGame() {
                             name="title"
                             value={formData.title}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2"
+                            className={`w-full p-2 rounded-md focus:outline-none focus:ring-2 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
                             placeholder="Title of the game"
                         />
                     </div>
@@ -77,7 +79,7 @@ function CreateGame() {
                             name="description"
                             value={formData.description}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2"
+                            className={`w-full p-2 rounded-md focus:outline-none focus:ring-2 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
                             placeholder="Description of the game"
                         ></textarea>
                     </div>
@@ -91,18 +93,20 @@ function CreateGame() {
                             name="developer"
                             value={formData.developer}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2"
+                            className={`w-full p-2 rounded-md focus:outline-none focus:ring-2 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
                             placeholder="Developer of the game"
                         />
                     </div>
-                    <button type="submit"
-                            className="px-4 py-2 bg-white text-black font-semibold rounded-md border border-black">
+                    <button
+                        type="submit"
+                        className={`px-4 py-2 font-semibold rounded-md border ${theme === 'dark' ? 'bg-gray-700 text-white border-white' : 'bg-white text-black border-black'}`}
+                    >
                         Submit
                     </button>
                 </form>
             </div>
-        </>
-    )
+        </div>
+    );
 }
 
 export default CreateGame;

@@ -7,7 +7,7 @@ function Layout() {
     const { theme } = useContext(ThemeContext);
     return (
         <div
-            className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
+            className={`min-h-screen ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
             <header className="p-4 flex justify-center items-center">
                 <h1 className="text-5xl font-bold">Game App</h1>
             </header>
