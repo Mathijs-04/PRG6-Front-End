@@ -43,23 +43,6 @@ function Game() {
         }
     }
 
-    async function toggleFavorite() {
-        const favorite = game.favorite;
-        try {
-            await fetch(`http://145.24.223.187:8000/games/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({"favorite": !favorite}),
-            });
-            setGame({...game, favorite: !favorite});
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
-    }
-
     useEffect(() => {
         fetchGame();
     }, []);
@@ -98,12 +81,6 @@ function Game() {
                                     className="px-4 py-2 bg-white text-black rounded border border-black"
                                 >
                                     Delete
-                                </button>
-                                <button
-                                    onClick={toggleFavorite}
-                                    className="px-4 py-2 bg-white text-black rounded border border-black ml-2"
-                                >
-                                    Favorite
                                 </button>
                             </div>
                         </div>

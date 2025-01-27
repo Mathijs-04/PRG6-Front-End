@@ -19,11 +19,36 @@ function Games() {
                 }
             });
             const data = await response.json();
-            const sortedGames = data.items.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            const sortedGames = data.items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             setGames(sortedGames);
             setFilteredGames(sortedGames);
         } catch (error) {
             console.error('Error:', error);
+        }
+    }
+
+    async function toggleFavorite(id, currentFavorite) {
+        try {
+            await fetch(`http://145.24.223.187:8000/games/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"favorite": !currentFavorite}),
+            });
+            setGames((prevGames) =>
+                prevGames.map((game) =>
+                    game.id === id ? {...game, favorite: !currentFavorite} : game
+                )
+            );
+            setFilteredGames((prevFilteredGames) =>
+                prevFilteredGames.map((game) =>
+                    game.id === id ? {...game, favorite: !currentFavorite} : game
+                )
+            );
+        } catch (error) {
+            console.error('An error occurred:', error);
         }
     }
 
@@ -63,6 +88,8 @@ function Games() {
 
             <Searchbar onSearch={handleSearch}/>
 
+            <button>Show favorites</button>
+
             <div className="space-y-4">
                 {paginatedGames && paginatedGames.length > 0 ? (
                     paginatedGames.map((game) => (
@@ -76,6 +103,15 @@ function Games() {
                                 <p>{game.description}</p>
                                 <p>Developer: {game.developer}</p>
                                 <p>Favorite: {game.favorite.toString()}</p>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleFavorite(game.id, game.favorite);
+                                    }}
+                                    className="px-4 py-2 bg-white text-black rounded border border-black ml-2"
+                                >
+                                    {game.favorite ? 'Unfavorite' : 'Favorite'}
+                                </button>
                             </div>
                         </Link>
                     ))
