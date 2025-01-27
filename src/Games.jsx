@@ -8,6 +8,7 @@ function Games() {
     const [filteredGames, setFilteredGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
+    const [showFavorites, setShowfavorites] = useState(false);
     const limit = 5;
 
     async function fetchAllGames() {
@@ -62,9 +63,21 @@ function Games() {
         setCurrentPage(1);
     }
 
+    const toggleShowFavorites = () => {
+        setShowfavorites(!showFavorites);
+    }
+
     useEffect(() => {
         fetchAllGames();
     }, []);
+
+    useEffect(() => {
+        if (showFavorites) {
+            setFilteredGames(games.filter(game => game.favorite));
+        } else {
+            setFilteredGames(games);
+        }
+    }, [showFavorites, games]);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -88,7 +101,10 @@ function Games() {
 
             <Searchbar onSearch={handleSearch}/>
 
-            <button>Show favorites</button>
+            <button onClick={toggleShowFavorites}
+                    className="ml-2 px-4 py-2 bg-white text-black rounded border border-black">
+                {showFavorites ? 'Show All' : 'Show Favorites'}
+            </button>
 
             <div className="space-y-4">
                 {paginatedGames && paginatedGames.length > 0 ? (
