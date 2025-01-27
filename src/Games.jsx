@@ -136,6 +136,8 @@ function Games() {
                 )}
             </div>
             <div>
+                <button onClick={() => handlePageChange(1)}>First</button>
+
                 {currentPage > 1 && (
                     <button onClick={() => handlePageChange(currentPage - 1)}>&lt;</button>
                 )}
@@ -153,6 +155,8 @@ function Games() {
                 {currentPage < totalPages && (
                     <button onClick={() => handlePageChange(currentPage + 1)}>&gt;</button>
                 )}
+
+                <button onClick={() => handlePageChange(totalPages)}>Last</button>
             </div>
         </>
     );
