@@ -19,8 +19,9 @@ function Games() {
                 }
             });
             const data = await response.json();
-            setGames(data.items);
-            setFilteredGames(data.items);
+            const sortedGames = data.items.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            setGames(sortedGames);
+            setFilteredGames(sortedGames);
         } catch (error) {
             console.error('Error:', error);
         }
