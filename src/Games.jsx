@@ -8,6 +8,7 @@ function Games() {
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const [showFavorites, setShowFavorites] = useState(false);
     const limit = 10;
 
@@ -26,7 +27,33 @@ function Games() {
         }
     }
 
+    async function toggleFavorite(id, currentFavorite) {
+        try {
+            await fetch(`http://145.24.223.187:8000/games/${id}`, {
+                method: "PATCH",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ favorite: !currentFavorite }),
+            });
+            setGames((prevGames) =>
+                prevGames.map((game) =>
+                    game.id === id ? { ...game, favorite: !currentFavorite } : game
+                )
+            );
+            setFilteredGames((prevFilteredGames) =>
+                prevFilteredGames.map((game) =>
+                    game.id === id ? { ...game, favorite: !currentFavorite } : game
+                )
+            );
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    }
+
     const handleSearch = (term) => {
+        setSearchTerm(term); // Update search term
         const filtered = games.filter((game) =>
             game.title.toLowerCase().includes(term.toLowerCase()) ||
             game.developer.toLowerCase().includes(term.toLowerCase())
@@ -64,7 +91,6 @@ function Games() {
 
     return (
         <div className={theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}>
-
             <div className="flex justify-center items-center space-x-4 mb-6">
                 <Searchbar onSearch={handleSearch} />
                 <button
@@ -77,29 +103,44 @@ function Games() {
                 </button>
             </div>
 
-            {/* Game list in two columns */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {paginatedGames.length > 0 ? (
                     paginatedGames.map((game) => (
-                        <Link to={`/games/${game.id}`} key={game.id}>
-                            <div
-                                className={`p-4 rounded-lg shadow-md ${
-                                    theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"
-                                }`}
-                            >
+                        <div
+                            key={game.id}
+                            className={`p-4 rounded-lg shadow-md ${
+                                theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"
+                            }`}
+                        >
+                            <Link to={`/games/${game.id}`}>
                                 <p className="text-2xl font-bold">{game.title}</p>
                                 <p>{game.description}</p>
                                 <p>Developer: {game.developer}</p>
-                                <p>Favorite: {game.favorite.toString()}</p>
-                            </div>
-                        </Link>
+                            </Link>
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    toggleFavorite(game.id, game.favorite);
+                                }}
+                                className={`px-4 py-2 mt-4 font-semibold rounded border ${
+                                    theme === "dark"
+                                        ? "bg-gray-600 text-white border-gray-500 hover:bg-gray-500"
+                                        : "bg-gray-200 text-black border-gray-300 hover:bg-gray-300"
+                                }`}
+                            >
+                                {game.favorite ? "Unfavorite" : "Favorite"}
+                            </button>
+                        </div>
                     ))
                 ) : (
-                    <p>Loading games...</p>
+                    <p className="text-center text-lg font-semibold">
+                        {searchTerm
+                            ? "No games found for your search."
+                            : "Loading games..."}
+                    </p>
                 )}
             </div>
 
-            {/* Pagination */}
             <div className="flex justify-center items-center space-x-2">
                 <button
                     onClick={() => handlePageChange(1)}
