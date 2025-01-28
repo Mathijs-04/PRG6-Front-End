@@ -5,7 +5,7 @@ import Button from "./Button";
 
 function Layout() {
     const { theme } = useContext(ThemeContext);
-    const location = useLocation(); // Get the current location
+    const location = useLocation();
 
     return (
         <div
