@@ -1,15 +1,17 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import { useContext } from "react";
 import { ThemeContext } from "./ThemeContext.jsx";
-import Button from './Button';
+import Button from "./Button";
 
 function Layout() {
     const { theme } = useContext(ThemeContext);
+    const location = useLocation(); // Get the current location
+
     return (
         <div
             className={`min-h-screen relative ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
         >
-            {/* Top-right positioned button */}
+            {/* Top-right toggle button */}
             <div className="absolute top-4 right-4">
                 <Button />
             </div>
@@ -18,10 +20,44 @@ function Layout() {
                 <h1 className="text-5xl font-bold">Game App</h1>
             </header>
 
+            {/* Navigation bar */}
             <nav className="p-4 flex justify-between">
-                <Link to={"/"} className="py-2 px-4 rounded flex-1 text-center">Home</Link>
-                <Link to={"/games"} className="py-2 px-4 rounded flex-1 text-center">Games</Link>
-                <Link to={"/games/create"} className="py-2 px-4 rounded flex-1 text-center">Create</Link>
+                <Link
+                    to="/"
+                    className={`py-2 px-4 rounded text-center basis-[30%] ${
+                        location.pathname === "/"
+                            ? theme === "dark"
+                                ? "bg-blue-500 text-white"
+                                : "bg-blue-300 text-black"
+                            : ""
+                    }`}
+                >
+                    Home
+                </Link>
+                <Link
+                    to="/games"
+                    className={`py-2 px-4 rounded text-center basis-[30%] ${
+                        location.pathname === "/games"
+                            ? theme === "dark"
+                                ? "bg-blue-500 text-white"
+                                : "bg-blue-300 text-black"
+                            : ""
+                    }`}
+                >
+                    Games
+                </Link>
+                <Link
+                    to="/games/create"
+                    className={`py-2 px-4 rounded text-center basis-[30%] ${
+                        location.pathname === "/games/create"
+                            ? theme === "dark"
+                                ? "bg-blue-500 text-white"
+                                : "bg-blue-300 text-black"
+                            : ""
+                    }`}
+                >
+                    Create
+                </Link>
             </nav>
 
             <main className="p-4">

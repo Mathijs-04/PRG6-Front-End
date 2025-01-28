@@ -64,9 +64,7 @@ function Games() {
 
     return (
         <div className={theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}>
-            <h1 className="text-2xl font-bold text-center mb-6">Games</h1>
 
-            {/* Search bar and favorite button in the same row */}
             <div className="flex justify-center items-center space-x-4 mb-6">
                 <Searchbar onSearch={handleSearch} />
                 <button
