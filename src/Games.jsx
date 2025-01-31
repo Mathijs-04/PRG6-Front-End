@@ -19,9 +19,8 @@ function Games() {
                 headers: { Accept: "application/json" },
             });
             const data = await response.json();
-            const sortedGames = data.items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setGames(sortedGames);
-            setFilteredGames(sortedGames);
+            setGames(data.items);
+            setFilteredGames(data.items);
         } catch (error) {
             console.error("Error:", error);
         }
