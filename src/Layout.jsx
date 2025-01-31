@@ -19,7 +19,6 @@ function Layout() {
                 <h1 className="text-5xl font-bold">Game App</h1>
             </header>
 
-            {/* Navigation bar */}
             <nav className="p-4 flex justify-between">
                 <Link
                     to="/"
