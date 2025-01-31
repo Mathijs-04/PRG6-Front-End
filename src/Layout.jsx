@@ -16,7 +16,7 @@ function Layout() {
             </div>
 
             <header className="p-4 flex justify-center items-center">
-                <h1 className="text-5xl font-bold">Game App</h1>
+                <h1 className="text-5xl font-bold">Game Collection</h1>
             </header>
 
             <nav className="p-4 flex justify-between">
