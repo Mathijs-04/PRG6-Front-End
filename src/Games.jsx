@@ -108,7 +108,9 @@ function Games() {
                         <div
                             key={game.id}
                             className={`p-4 rounded-lg shadow-md ${
-                                theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"
+                                theme === "dark"
+                                    ? game.favorite ? "bg-gray-600 text-white border border-blue-500" : "bg-gray-700 text-white border border-gray-500"
+                                    : game.favorite ? "bg-blue-50 text-black border border-blue-500" : "bg-white text-black border border-gray-300"
                             }`}
                         >
                             <Link to={`/games/${game.id}`}>
