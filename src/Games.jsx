@@ -52,7 +52,7 @@ function Games() {
     }
 
     const handleSearch = (term) => {
-        setSearchTerm(term); // Update search term
+        setSearchTerm(term);
         const filtered = games.filter((game) =>
             game.title.toLowerCase().includes(term.toLowerCase()) ||
             game.developer.toLowerCase().includes(term.toLowerCase())
