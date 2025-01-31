@@ -11,7 +11,6 @@ function Layout() {
         <div
             className={`min-h-screen relative ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
         >
-            {/* Top-right toggle button */}
             <div className="absolute top-4 right-4">
                 <Button />
             </div>
