@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
-import { ThemeContext } from "./ThemeContext.jsx";
+import {useState, useContext} from "react";
+import {ThemeContext} from "./ThemeContext.jsx";
 
-const Searchbar = ({ onSearch }) => {
+// eslint-disable-next-line react/prop-types
+const Searchbar = ({onSearch}) => {
     const [searchTerm, setSearchTerm] = useState("");
-    const { theme } = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);

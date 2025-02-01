@@ -59,7 +59,8 @@ function Game() {
                 <>
                     <h1 className="text-2xl font-bold mb-6">Game: {game.title}</h1>
                     <div className="space-y-6">
-                        <div className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+                        <div
+                            className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
                             <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
                             <p className="mb-4">{game.description}</p>
                             <p className="mb-4">Developer: {game.developer}</p>

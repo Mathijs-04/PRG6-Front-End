@@ -9,7 +9,7 @@ import Games from './Games.jsx';
 import CreateGame from './CreateGame.jsx';
 import EditGame from './EditGame.jsx';
 import NotFound from "./NotFound.jsx";
-import { ThemeProvider } from "./ThemeContext.jsx";
+import {ThemeProvider} from "./ThemeContext.jsx";
 
 const router = createBrowserRouter(
     [

@@ -52,7 +52,8 @@ function CreateGame() {
 
     return (
         <div className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
-            <div className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+            <div
+                className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
                 <h2 className="text-2xl font-bold mb-4">Create a new game</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>

@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router";
+import {useContext, useEffect, useState} from "react";
+import {Link} from "react-router";
 import Searchbar from "./Searchbar.jsx";
-import { ThemeContext } from "./ThemeContext.jsx";
+import {ThemeContext} from "./ThemeContext.jsx";
 
 function Games() {
-    const { theme } = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
     const [games, setGames] = useState([]);
     const [filteredGames, setFilteredGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +16,7 @@ function Games() {
         try {
             const response = await fetch(`http://145.24.223.187:8000/games`, {
                 method: "GET",
-                headers: { Accept: "application/json" },
+                headers: {Accept: "application/json"},
             });
             const data = await response.json();
             setGames(data.items);
@@ -34,16 +34,16 @@ function Games() {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ favorite: !currentFavorite }),
+                body: JSON.stringify({favorite: !currentFavorite}),
             });
             setGames((prevGames) =>
                 prevGames.map((game) =>
-                    game.id === id ? { ...game, favorite: !currentFavorite } : game
+                    game.id === id ? {...game, favorite: !currentFavorite} : game
                 )
             );
             setFilteredGames((prevFilteredGames) =>
                 prevFilteredGames.map((game) =>
-                    game.id === id ? { ...game, favorite: !currentFavorite } : game
+                    game.id === id ? {...game, favorite: !currentFavorite} : game
                 )
             );
         } catch (error) {
@@ -86,12 +86,12 @@ function Games() {
     const startPage = Math.max(1, currentPage - Math.floor(maxPageLinks / 2));
     const endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
     const adjustedStartPage = Math.max(1, endPage - maxPageLinks + 1);
-    const pageNumbers = Array.from({ length: endPage - adjustedStartPage + 1 }, (_, i) => adjustedStartPage + i);
+    const pageNumbers = Array.from({length: endPage - adjustedStartPage + 1}, (_, i) => adjustedStartPage + i);
 
     return (
         <div className={theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}>
             <div className="flex justify-center items-center space-x-4 mb-6">
-                <Searchbar onSearch={handleSearch} />
+                <Searchbar onSearch={handleSearch}/>
                 <button
                     onClick={toggleShowFavorites}
                     className={`px-4 py-2 font-semibold rounded border ${

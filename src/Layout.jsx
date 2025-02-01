@@ -1,10 +1,10 @@
-import { Link, Outlet, useLocation } from "react-router";
-import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext.jsx";
+import {Link, Outlet, useLocation} from "react-router";
+import {useContext} from "react";
+import {ThemeContext} from "./ThemeContext.jsx";
 import Button from "./Button";
 
 function Layout() {
-    const { theme } = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
     const location = useLocation();
 
     return (
@@ -12,7 +12,7 @@ function Layout() {
             className={`min-h-screen relative ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
         >
             <div className="absolute top-4 right-4">
-                <Button />
+                <Button/>
             </div>
 
             <header className="p-4 flex justify-center items-center">
@@ -59,7 +59,7 @@ function Layout() {
             </nav>
 
             <main className="p-4">
-                <Outlet />
+                <Outlet/>
             </main>
         </div>
     );

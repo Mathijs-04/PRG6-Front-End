@@ -77,7 +77,8 @@ function EditGame() {
     return (
         <div className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
             <h1 className="text-2xl font-bold">Edit Game</h1>
-            <div className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+            <div
+                className={`p-6 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
                 <h2 className="text-2xl font-bold mb-4">Edit game</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
